@@ -1,0 +1,23 @@
+const express=require('express')
+const db=require('./db')
+const path=require('path')
+const cookieParser=require('cookie-parser')
+const session=require('express-session')
+const userRouter=require('./router')
+const foodRouter=require('./router/food')
+const fileRouter=require('./router/file')
+const bodyParse=require('body-parser')
+const cors=require('cors')
+const socket=require('./socket')
+const app=express()
+
+app.use(cors()) //后端解决跨域请求
+app.use(bodyParse.urlencoded({extended:false}))
+app.use(bodyParse.json())
+app.use('/',userRouter)
+app.use('/food',foodRouter)
+app.use('/file',fileRouter)
+app.use(express.static(path.join(__dirname,'static')))
+app.listen(3000,()=>{
+  console.log('server 3000')
+})
